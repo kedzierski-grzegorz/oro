@@ -10,27 +10,24 @@ import java.util.Map;
 
 public class BasicAuthenInterceptor implements HandlerInterceptor {
 
-    public static Map<String, UserSession> sessions = new HashMap<String, UserSession>(){{
-        put("test", new UserSession() {{
-            setId(0);
-            setRole(Role.ADMIN);
-            setToken("test");
-            setUsername("Jan");
-            setFullName("Jan Nowak");
-        }});
-    }};
+    public static Map<String, UserSession> sessions = new HashMap<String, UserSession>();
 
-    private String[] anonymousAllowedPaths = new String[] {
-        "/login"
+    private final String[] anonymousAllowedPaths = new String[] {
+        "/login","/sign-up"
     };
 
-    private Map<String, String[]> rolesPaths = new HashMap<String, String[]>() {{
+    private final Map<String, String[]> rolesPaths = new HashMap<String, String[]>() {{
         put("/admin", new String[] { Role.ADMIN.toString() });
     }};
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String path = request.getServletPath();
+        if (path.equals("/error")) {
+            return true;
+        }
+
+
         for (String allowedPath : anonymousAllowedPaths) {
             if (path.startsWith(allowedPath)) {
                 return true;

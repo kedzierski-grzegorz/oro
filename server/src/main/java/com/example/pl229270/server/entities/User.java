@@ -1,11 +1,11 @@
 package com.example.pl229270.server.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.pl229270.server.auth.Role;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Date;
 
 @Entity(name = "users")
 public class User {
@@ -15,5 +15,17 @@ public class User {
     private int id;
 
     @Getter @Setter
-    private String name;
+    private String firstName;
+    @Getter @Setter
+    private String lastName;
+
+    @Enumerated(EnumType.STRING)
+    @Getter @Setter
+    private Role role;
+    @Getter @Setter
+    private String email;
+    @Getter @Setter
+    private String password;
+    @Getter @Setter
+    private Date birthDate;
 }
