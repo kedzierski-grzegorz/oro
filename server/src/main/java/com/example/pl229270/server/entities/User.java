@@ -1,6 +1,7 @@
 package com.example.pl229270.server.entities;
 
 import com.example.pl229270.server.auth.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +25,7 @@ public class User {
     private Role role;
     @Getter @Setter
     private String email;
+    @JsonIgnore
     @Getter @Setter
     private String password;
     @Getter @Setter

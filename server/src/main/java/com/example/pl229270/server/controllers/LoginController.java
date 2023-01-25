@@ -1,5 +1,6 @@
 package com.example.pl229270.server.controllers;
 
+import com.example.pl229270.server.Utils;
 import com.example.pl229270.server.auth.Role;
 import com.example.pl229270.server.auth.UserSession;
 import com.example.pl229270.server.commands.LoginCommand;
@@ -38,7 +39,7 @@ public class LoginController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
 
-        String hashedPassword = Hashing.sha256().hashString(command.getPassword(), StandardCharsets.UTF_8).toString();
+        String hashedPassword = Utils.hash256(command.getPassword());
         if (!user.getPassword().equals(hashedPassword)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong password");
         }
@@ -66,13 +67,17 @@ public class LoginController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password is empty");
         }
 
+        if (!Utils.isValidEmailAddress(command.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is invalid");
+        }
+
         if (userRepository.existsByEmail(command.getEmail())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists");
         }
 
         User user = new User();
         user.setEmail(command.getEmail());
-        user.setPassword(Hashing.sha256().hashString(command.getPassword(), StandardCharsets.UTF_8).toString());
+        user.setPassword(Utils.hash256(command.getPassword()));
         user.setRole(Role.USER);
         user.setFirstName("");
         user.setLastName("");
