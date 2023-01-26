@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(path = "/admin")
 public class AdminController {
 
@@ -22,7 +22,7 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public @ResponseBody Page<User> getUsers(
+    public Page<User> getUsers(
             @RequestParam(value = "page", required=false, defaultValue = "0") int page,
             @RequestParam(value = "size", required=false, defaultValue = "10") int size,
             @RequestParam(value = "sort", required=false, defaultValue = "email") String sort,

@@ -27,6 +27,16 @@ public class BasicAuthenInterceptor implements HandlerInterceptor {
             return true;
         }
 
+        String method = request.getMethod();
+        String acceptMethods = request.getHeader("Access-Control-Request-Method");
+        String acceptHeaders = request.getHeader("Access-Control-Request-Headers");
+        if (
+                method != null && method.equalsIgnoreCase("OPTIONS") &&
+                acceptMethods != null &&
+                acceptHeaders != null
+        ) {
+            return true;
+        }
 
         for (String allowedPath : anonymousAllowedPaths) {
             if (path.startsWith(allowedPath)) {
