@@ -1,1 +1,56 @@
-<p>admin-user-edit works!</p>
+<form #form>
+  <div class="container mt-3">
+    <div class="row g-2 mb-4">
+      <div class="col-lg-11">
+        <h4>Edit user</h4>
+      </div>
+      <div class="col-lg-1">
+        <button type="button" #btnSave (click)="save()" class="btn btn-primary w-100">Update</button>
+      </div>
+    </div>
+
+    <div class="row g-2 mb-3">
+      <div class="col-md">
+        <label for="email" class="form-label">Email*</label>
+        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.email" required>
+      </div>
+      <div class="col-md">
+        <label for="role" class="form-label">Role*</label>
+        <select class="form-select" id="role"
+                [disabled]="loggedUser.id === user.id"
+                required name="role" [(ngModel)]="user.role">
+          <option value="USER">USER</option>
+          <option value="ADMIN">ADMIN</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row g-2 mb-3">
+      <div class="col-md">
+        <label for="password" class="form-label">Password (leave empty if you don't want to change it)</label>
+        <input type="password" class="form-control" id="password" name="password" [(ngModel)]="user.password">
+      </div>
+    </div>
+
+    <div class="row g-2 mb-3">
+      <div class="col-md">
+        <label for="firstName" class="form-label">First name</label>
+        <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="user.firstName">
+      </div>
+      <div class="col-md">
+        <label for="lastName" class="form-label">Last name</label>
+        <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="user.lastName">
+      </div>
+    </div>
+
+    <div class="row g-2 mb-3">
+      <div class="col-md">
+        <label for="birthDate" class="form-label">Date of birth</label>
+        <input type="date" class="form-control"
+               [ngModel]="user.birthDate | date:'yyyy-MM-dd'" (ngModelChange)="user.birthDate = $event"
+               id="birthDate" name="birthDate">
+      </div>
+    </div>
+
+  </div>
+</form>

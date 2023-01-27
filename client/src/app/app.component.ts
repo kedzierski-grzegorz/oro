@@ -13,6 +13,7 @@ import {LoadingSpinnerComponent} from "./components/loading-spinner/loading-spin
 })
 export class AppComponent implements OnInit, AfterViewInit {
 
+  isAdmin = false;
   isNavbarVisible = false;
 
   constructor(
@@ -27,6 +28,13 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.loginService.userRoleObs.subscribe(role => {
+      if (role) {
+        this.isAdmin = role === 'ADMIN';
+      } else {
+        this.isAdmin = false;
+      }
+    });
   }
 
   ngAfterViewInit() {

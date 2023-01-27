@@ -1,1 +1,32 @@
-<p>register works!</p>
+<div class="container rounded-3">
+  <h5>Welcome to application</h5>
+  <h3>Sign Up</h3>
+  <form #form (keyup.enter)="btn.click()">
+    <div class="row g-2 mt-4">
+      <div class="col-lg">
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="email" required [(ngModel)]="email" name="email">
+          <label for="email">Email</label>
+        </div>
+      </div>
+    </div>
+    <div class="row g-2 mt-1">
+      <div class="col-lg">
+        <div class="form-floating">
+          <input type="password" class="form-control" id="password" required [(ngModel)]="password" name="password">
+          <label for="password">Password</label>
+        </div>
+      </div>
+    </div>
+    <div class="row g-2 mt-1">
+      <div class="col-lg">
+        <button type="button" #btn (click)="submit($event)" class="btn btn-primary w-100">Sign Up</button>
+      </div>
+    </div>
+    <div class="row g-2 mt-1">
+      <div class="col-lg">
+        Do you have an account? <a routerLink="/login">Log in</a>
+      </div>
+    </div>
+  </form>
+</div>

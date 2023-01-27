@@ -36,12 +36,13 @@ export class LoginComponent {
     LoadingSpinnerComponent.show();
     try {
       await this.loginService.login(this.email, this.password);
-      this.notifications.success('Login successful');
+      this.notifications.success('Login successful', null, {timeOut: 2000});
       setTimeout(() => {
         this.router.navigate(['/app']);
       }, 500);
     } catch (e) {
       this.notifications.error('Login failed');
+      console.error(e);
     }
     LoadingSpinnerComponent.hide();
   }

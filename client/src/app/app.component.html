@@ -5,6 +5,12 @@
     <a class="navbar-brand" href="#">Application</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/app/my-account']">My account</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link" [routerLink]="['/app/users']">Users</a>
+        </li>
       </ul>
       <button class="btn btn-outline-secondary me-2" (click)="logout()" type="button">Log out</button>
     </div>

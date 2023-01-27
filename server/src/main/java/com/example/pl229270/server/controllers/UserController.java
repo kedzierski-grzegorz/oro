@@ -38,6 +38,10 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid email address");
         }
 
+        if (!entity.getEmail().equals(user.getEmail()) && userRepository.existsByEmail(user.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists");
+        }
+
         if (user.getPassword() != null && !user.getPassword().isEmpty()) {
             entity.setPassword(Utils.hash256(user.getPassword()));
         }

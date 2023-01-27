@@ -29,11 +29,24 @@ export class AdminService {
       .toPromise();
   }
 
+  async getUser(id: number): Promise<User> {
+    return this.http.get<User>(
+      environment.apiUrl + '/admin/users/' + id
+    )
+      .pipe(map(u => Object.setPrototypeOf(u, User.prototype)))
+      .toPromise();
+  }
+
   async updateUser(user: User): Promise<void> {
     return this.http.put<void>(
-      environment.apiUrl + '/admin/users/',
+      environment.apiUrl + '/admin/users',
       user
     ).toPromise();
   }
 
+  async deleteUser(id: number): Promise<void> {
+    return this.http.delete<void>(
+      environment.apiUrl + '/admin/users/' + id
+    ).toPromise();
+  }
 }

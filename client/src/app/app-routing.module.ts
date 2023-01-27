@@ -6,6 +6,7 @@ import {MyAccountComponent} from "./pages/my-account/my-account.component";
 import {AdminUsersComponent} from "./pages/admin-users/admin-users.component";
 import {AdminUserEditComponent} from "./pages/admin-user-edit/admin-user-edit.component";
 import {AuthGuard} from "./guards/auth.guard";
+import {RoleGuard} from "./guards/role.guard";
 
 const routes: Routes = [
   {
@@ -25,28 +26,20 @@ const routes: Routes = [
         component: MyAccountComponent,
       },
       {
-        path: '**',
-        redirectTo: 'my-account'
-      }
-    ],
-  },
-  {
-    path: 'admin',
-    canActivate: [AuthGuard],
-    children: [
-      {
         path: 'users',
+        canActivate: [RoleGuard],
         component: AdminUsersComponent,
       },
       {
         path: 'users/:id',
+        canActivate: [RoleGuard],
         component: AdminUserEditComponent
       },
       {
         path: '**',
-        redirectTo: 'users'
+        redirectTo: 'my-account'
       }
-    ]
+    ],
   },
   {
     path: '**',

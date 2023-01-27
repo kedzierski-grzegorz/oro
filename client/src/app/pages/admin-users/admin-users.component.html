@@ -1,1 +1,45 @@
-<p>admin-users works!</p>
+<div class="container mt-3">
+  <h4>All users</h4>
+  <div class="row g-2">
+    <div class="col-lg">
+      <div class="table-responsive">
+        <table class="table table-sm table-striped">
+          <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Email</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Birth date</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of page.content">
+            <th scope="row" width="150rem">
+              <button class="btn btn-primary py-1 me-1" [routerLink]="['/','app','users',user.id]">Edit</button>
+              <button class="btn btn-danger py-1"
+                      *ngIf="loggedUser.id !== user.id"
+                      (click)="deleteUser(user.id)">Delete</button>
+            </th>
+            <td>{{user.email}}</td>
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{user.role}}</td>
+            <td>{{user.birthDate | date:'yyyy-MM-dd'}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="table-footer">
+          <button class="btn btn-outline-secondary"
+                  [disabled]="page && page.first"
+                  (click)="previousPage()">&lt;</button>
+          <label class="mx-3">Page {{page.number + 1}}/{{page.totalPages}} (elements: {{page.totalElements}})</label>
+          <button class="btn btn-outline-secondary"
+                  [disabled]="page && page.last"
+                  (click)="nextPage()">&gt;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

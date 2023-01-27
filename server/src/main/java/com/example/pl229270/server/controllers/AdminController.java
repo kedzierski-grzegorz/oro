@@ -36,6 +36,15 @@ public class AdminController {
         return userRepository.findAll(pr);
     }
 
+    @GetMapping("/users/{id}")
+    public User getUser(@PathVariable("id") int id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+
+        return user;
+    }
+
     @PutMapping("/users")
     public void updateUser(@RequestBody User user) {
         User entity = userRepository.findById(user.getId()).orElse(null);
@@ -45,6 +54,10 @@ public class AdminController {
 
         if (user.getEmail().isEmpty() || !Utils.isValidEmailAddress(user.getEmail())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid email address");
+        }
+
+        if (!entity.getEmail().equals(user.getEmail()) && userRepository.existsByEmail(user.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists");
         }
 
         if (user.getPassword() != null && !user.getPassword().isEmpty()) {
@@ -57,5 +70,14 @@ public class AdminController {
         entity.setRole(user.getRole());
         entity.setBirthDate(user.getBirthDate());
         userRepository.save(entity);
+    }
+
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable("id") int id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+
+        userRepository.delete(user);
     }
 }
